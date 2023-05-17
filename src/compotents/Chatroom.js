@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, ScrollView, Image, BackHandler } from "react-native";
+import React, { useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { Zocial } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,6 +25,21 @@ const Chatroom = ({ navigation, route }) => {
     [2, "Hello how "],
   ];
   const name = route.params.name;
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack()
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <>
       <View>

@@ -1,5 +1,5 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, ScrollView, Image, TouchableOpacity, BackHandler } from "react-native";
+import React, { useEffect } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -20,6 +20,20 @@ const Status = ({ navigation }) => {
     "99",
     "99000 ",
   ];
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack()
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   return (
     <ScrollView style={{ paddingHorizontal: 15, backgroundColor: "#1c1c1f" }}>
       <View style={{ marginBottom: 5, marginTop: 15 }}>

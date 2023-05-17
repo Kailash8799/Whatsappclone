@@ -11,14 +11,20 @@ import Chatroom from "./src/compotents/Chatroom";
 import Login from "./src/compotents/Login";
 import OtpScreen from "./src/compotents/OtpScreen";
 import AllContact from "./src/compotents/AllContact";
-
-
+import StartScreen from "./src/compotents/StartScreen";
 const Stack = createNativeStackNavigator();
 
+
 function App() {
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName={"StartScreen"}>
+        <Stack.Screen
+          name="StartScreen"
+          component={StartScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}

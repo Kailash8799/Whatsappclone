@@ -8,8 +8,6 @@ import {
   Alert,
 } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import { db } from "../../firebase";
 import firebase from 'firebase/compat'
 
 const OtpScreen = ({ navigation,route }) => {
@@ -44,10 +42,6 @@ const OtpScreen = ({ navigation,route }) => {
       clearInterval(interverl);
     };
   }, [timed]);
-
-  useEffect(()=>{
-    console.log(code);
-  },[])
 
   const verifyOTP = ()=>{
     const codeotp = f1+f2+f3+f4+f5+f6

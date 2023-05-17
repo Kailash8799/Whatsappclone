@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity,Modal, StyleSheet, Dimensions, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity,Modal, StyleSheet, Dimensions, ActivityIndicator, BackHandler } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Contacts from 'expo-contacts'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -23,6 +23,20 @@ const Chats = ({ navigation }) => {
       }
     })() 
   }, [])
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.goBack()
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
   
   return (
     <>

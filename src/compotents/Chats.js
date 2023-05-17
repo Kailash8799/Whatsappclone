@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   ActivityIndicator,
+  BackHandler,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import * as Contacts from "expo-contacts";
@@ -51,6 +52,21 @@ const Chats = ({ navigation }) => {
     setimagesource(img);
     setModalVisible(true);
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp()
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <>
       <ScrollView style={{ paddingHorizontal: 15, backgroundColor: "#1c1c1f" }}>

@@ -2,11 +2,13 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Chats from "./Chats";
 import Status from "./Status";
 import Calls from "./Calls";
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import { View, Text, TouchableOpacity, BackHandler } from "react-native";
+import React, { useEffect } from "react";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { getAuth } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -22,6 +24,20 @@ const Tab = createMaterialTopTabNavigator();
   
 
 const Home = ({ navigation }) => {
+  const auth = getAuth()
+  useEffect(()=>{
+    (async()=>{
+      try {
+        const value = await AsyncStorage.getItem('@storage_Key')
+        if(value === null){
+            await AsyncStorage.setItem('@storage_Key', auth.currentUser.stsTokenManager.accessToken)
+        }
+      } catch (e) {
+      }
+    })()
+  },[])
+
+
   return (
     <>
       <View style={{ height: 38, backgroundColor: "#0C6157" }}></View>

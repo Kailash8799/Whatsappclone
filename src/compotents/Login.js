@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
-import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, Text, View, Alert, Pressable, BackHandler } from "react-native";
 import PhoneInput from "react-native-phone-number-input";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { firebaseConfig } from "../../firebase";
 import firebase from "firebase/compat";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const recaptchaver = useRef(null);
@@ -23,6 +24,32 @@ const Login = ({ navigation }) => {
     }
   };
 
+    useEffect(()=>{
+      (async()=>{
+        try {
+          const value = await AsyncStorage.getItem('@storage_Key')
+          if(value !== null) {
+            navigation.navigate("Home")
+          }
+        } catch(e) {
+          console.log();
+        }
+      })()
+    },[])
+
+    useEffect(() => {
+      const backAction = () => {
+        BackHandler.exitApp()
+        return true;
+      };
+  
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
+  
+      return () => backHandler.remove();
+    }, []);
   return (
     <View style={styles.container}>
         <FirebaseRecaptchaVerifierModal firebaseConfig={firebaseConfig} ref={recaptchaver}/>
